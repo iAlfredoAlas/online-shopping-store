@@ -14,7 +14,7 @@ import java.io.Serializable;
 @SQLDelete(sql = "UPDATE rol SET rol_status = false WHERE id_rol=?")
 @AllArgsConstructor
 @NoArgsConstructor
-public class rol implements Serializable {
+public class Rol implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

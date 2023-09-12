@@ -14,7 +14,7 @@ import java.io.Serializable;
 @SQLDelete(sql = "UPDATE user SET user_status = false WHERE id_user=?")
 @AllArgsConstructor
 @NoArgsConstructor
-public class user implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
