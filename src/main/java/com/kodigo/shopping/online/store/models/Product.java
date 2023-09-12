@@ -55,4 +55,10 @@ public class Product implements Serializable {
     @Setter
     private Boolean isProductActive = Boolean.TRUE;
 
+    @JoinColumn(name = "idCategory", referencedColumnName = "id_category", foreignKey = @ForeignKey(name = "FK_product_category"))
+    @ManyToOne(optional = false, targetEntity = Category.class)
+    @Getter
+    @Setter
+    private Category idCategory;
+
 }
