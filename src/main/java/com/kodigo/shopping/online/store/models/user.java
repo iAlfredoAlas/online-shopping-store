@@ -46,6 +46,6 @@ public class user implements Serializable {
     @Column(name = "user_status")
     @Getter
     @Setter
-    private Boolean isUserActive;
+    private Boolean isUserActive = Boolean.TRUE;
 
 }
