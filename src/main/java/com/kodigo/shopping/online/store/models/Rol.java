@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "rol")
-@SQLDelete(sql = "UPDATE rol SET rol_status = false WHERE id_rol=?")
+@SQLDelete(sql = "UPDATE rol SET status_rol = false WHERE id_rol=?")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Rol implements Serializable {
