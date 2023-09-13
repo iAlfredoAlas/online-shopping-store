@@ -22,7 +22,7 @@ public class Rol implements Serializable {
     @Column(name = "id_rol")
     @Getter
     @Setter
-    private Long rol;
+    private Long idRol;
 
     @Basic(optional = false)
     @Column(name = "name_rol")
