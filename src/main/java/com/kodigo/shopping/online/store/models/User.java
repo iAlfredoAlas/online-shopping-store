@@ -8,6 +8,8 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -47,5 +49,11 @@ public class User implements Serializable {
     @Getter
     @Setter
     private Boolean isUserActive = Boolean.TRUE;
+
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class)
+    @JoinTable(name = "user_rol", joinColumns = {
+            @JoinColumn(name = "idUser", referencedColumnName = "id_user") }, inverseJoinColumns = {
+            @JoinColumn(name = "idRol", referencedColumnName = "id_rol") })
+    private List<Rol> rolList = new ArrayList<>();
 
 }
