@@ -3,8 +3,6 @@ package com.kodigo.shopping.online.store.models.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
