@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cart")
+@SQLDelete(sql = "UPDATE cart SET cart_status = false WHERE id_cart=?")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
@@ -30,6 +31,12 @@ public class Cart {
     @Getter
     @Setter
     private Integer quatity;
+
+    @Basic(optional = false)
+    @Column(name = "cart_status")
+    @Getter
+    @Setter
+    private Boolean isCarActive = Boolean.TRUE;
 
     @JoinColumn(name = "id_order_detail", referencedColumnName = "id_order_detail", foreignKey = @ForeignKey(name = "FK_cart_order_detail"))
     @ManyToOne(optional = false, targetEntity = OrderDetail.class)
