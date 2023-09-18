@@ -24,6 +24,12 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public List<Cart> findCustom(Boolean flat) {
+        log.info("Show actives");
+        return cartRepository.findByIsCartActive(flat);
+    }
+
+    @Override
     public Cart findById(Long id) {
         log.info("Show by id.");
         return cartRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException("Not found", 404));
