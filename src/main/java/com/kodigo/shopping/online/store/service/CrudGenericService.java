@@ -6,6 +6,8 @@ public interface CrudGenericService <T, ID> {
 
     public List<T> getAll();
 
+    public List<T> findCustom(Boolean flat);
+
     public T findById(Long id);
 
     public T add(T model);
