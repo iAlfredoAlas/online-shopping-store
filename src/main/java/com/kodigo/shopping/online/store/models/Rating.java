@@ -45,6 +45,12 @@ public class Rating implements Serializable {
     @Setter
     private LocalDate dateRating;
 
+    @Basic(optional = false)
+    @Column(name = "rating_status")
+    @Getter
+    @Setter
+    private Boolean isRatingActive;
+
     @JoinColumn(name = "idUser", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "FK_rating_user"))
     @ManyToOne(optional = false, targetEntity = User.class)
     @Getter
