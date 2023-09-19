@@ -50,6 +50,8 @@ public class User implements Serializable {
     @Setter
     private Boolean isUserActive = Boolean.TRUE;
 
+    @Getter
+    @Setter
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class)
     @JoinTable(name = "user_rol", joinColumns = {
             @JoinColumn(name = "idUser", referencedColumnName = "id_user") }, inverseJoinColumns = {
