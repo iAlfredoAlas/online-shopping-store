@@ -2,7 +2,7 @@ package com.kodigo.shopping.online.store.service.implement;
 
 import com.kodigo.shopping.online.store.models.ClientOrder;
 import com.kodigo.shopping.online.store.repository.IClientOrderRepository;
-import com.kodigo.shopping.online.store.service.IClientOrder;
+import com.kodigo.shopping.online.store.service.IClientOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ClientOrderImpl implements IClientOrder {
+public class ClientOrderServiceImpl implements IClientOrderService {
 
     @Autowired
     private IClientOrderRepository clientOrderRepository;
