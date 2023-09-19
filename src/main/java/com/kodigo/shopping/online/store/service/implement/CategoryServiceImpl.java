@@ -1,7 +1,8 @@
-package com.kodigo.shopping.online.store.service;
+package com.kodigo.shopping.online.store.service.implement;
 
 import com.kodigo.shopping.online.store.models.Category;
 import com.kodigo.shopping.online.store.repository.ICategoryRepository;
+import com.kodigo.shopping.online.store.service.ICategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class CategoryServiceImpl implements ICategoryService{
+public class CategoryServiceImpl implements ICategoryService {
 
 
     @Autowired
