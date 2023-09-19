@@ -37,6 +37,12 @@ public class OrderDetail implements Serializable {
     @Setter
     private BigDecimal subtotal;
 
+    @Basic(optional = false)
+    @Column(name = "order_detail_status")
+    @Getter
+    @Setter
+    private Boolean isOrderDetailActive  = Boolean.TRUE;
+
     @JoinColumn(name = "idClientOrder", referencedColumnName = "id_client_order", foreignKey = @ForeignKey(name = "FK_order_detail_client_order"))
     @ManyToOne(optional = false, targetEntity = ClientOrder.class)
     @Getter
