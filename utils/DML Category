@@ -1,0 +1,7 @@
+INSERT INTO sql9647809.category (category_name, category_description, category_status)
+VALUES
+    ('Electronics', 'Electronic devices and accessories', 1),
+    ('Clothing', 'Apparel and fashion items', 1),
+    ('Books', 'Books of various genres', 1),
+    ('Home Decor', 'Furniture and home decoration items', 1),
+    ('Sports & Outdoors', 'Sporting goods and outdoor equipment', 1);
