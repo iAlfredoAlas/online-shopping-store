@@ -1,0 +1,8 @@
+INSERT INTO sql9647809.rol (name_rol, status_rol)
+VALUES
+    ('Admin', 1),
+    ('User', 1),
+    ('Manager', 1)
+    ('Guest', 1),
+    ('Editor', 1),
+    ('Supervisor', 1);

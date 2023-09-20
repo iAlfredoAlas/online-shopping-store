@@ -1,0 +1,134 @@
+/*================================================================================*/
+/* DDL SCRIPT                                                                     */
+/*================================================================================*/
+
+/*================================================================================*/
+/* CREATE TABLES                                                                  */
+/*================================================================================*/
+
+CREATE TABLE user (
+  id_user INT AUTO_INCREMENT NOT NULL,
+  user_name VARCHAR(40) NOT NULL,
+  password VARCHAR(40) NOT NULL,
+  user_email VARCHAR(40) NOT NULL,
+  user_status BOOL NOT NULL,
+  CONSTRAINT PK_user PRIMARY KEY (id_user)
+);
+
+CREATE TABLE category (
+  id_category INT AUTO_INCREMENT NOT NULL,
+  category_name VARCHAR(40) NOT NULL,
+  category_description VARCHAR(40) NOT NULL,
+  category_status BOOL NOT NULL,
+  CONSTRAINT PK_category PRIMARY KEY (id_category)
+);
+
+CREATE TABLE product (
+  id_product INT AUTO_INCREMENT NOT NULL,
+  id_category INT NOT NULL,
+  product_name VARCHAR(40) NOT NULL,
+  product_description VARCHAR(40) NOT NULL,
+  stock INT NOT NULL,
+  price REAL NOT NULL,
+  status_product BOOL NOT NULL,
+  CONSTRAINT PK_product PRIMARY KEY (id_product)
+);
+
+CREATE TABLE client_order (
+  id_client_order INT AUTO_INCREMENT NOT NULL,
+  id_user INT NOT NULL,
+  order_status BOOL NOT NULL,
+  date_order DATE NOT NULL,
+  CONSTRAINT PK_client_order PRIMARY KEY (id_client_order)
+);
+
+CREATE TABLE order_detail (
+  id_order_detail INT AUTO_INCREMENT NOT NULL,
+  id_client_order INT NOT NULL,
+  id_product INT NOT NULL,
+  quantity INT NOT NULL,
+  subtotal REAL NOT NULL,
+  order_detail_status BOOL NOT NULL,
+  CONSTRAINT PK_order_detail PRIMARY KEY (id_order_detail)
+);
+
+CREATE TABLE cart (
+  id_cart INT NOT NULL,
+  id_order_detail INT NOT NULL,
+  id_product INT NOT NULL,
+  quantity INT NOT NULL,
+  cart_status BOOL NOT NULL,
+  CONSTRAINT PK_cart PRIMARY KEY (id_cart)
+);
+
+CREATE TABLE rating (
+  id_rating INT AUTO_INCREMENT NOT NULL,
+  id_product INT NOT NULL,
+  id_user INT NOT NULL,
+  rating_detail VARCHAR(40) NOT NULL,
+  type_rating VARCHAR(9) NOT NULL,
+  date_rating DATE NOT NULL,
+  rating_status BOOL NOT NULL,
+  CONSTRAINT PK_rating PRIMARY KEY (id_rating)
+);
+
+CREATE TABLE rol (
+  id_rol INT AUTO_INCREMENT NOT NULL,
+  name_rol VARCHAR(40) NOT NULL,
+  status_rol BOOL NOT NULL,
+  CONSTRAINT PK_rol PRIMARY KEY (id_rol)
+);
+
+CREATE TABLE user_rol (
+  id_user INT NOT NULL,
+  id_rol INT NOT NULL,
+  CONSTRAINT PK_user_rol PRIMARY KEY (id_user, id_rol)
+);
+
+/*================================================================================*/
+/* CREATE FOREIGN KEYS                                                            */
+/*================================================================================*/
+
+ALTER TABLE product
+  ADD CONSTRAINT FK_product_category
+  FOREIGN KEY (id_category) REFERENCES category (id_category);
+
+ALTER TABLE client_order
+  ADD CONSTRAINT FK_order_user
+  FOREIGN KEY (id_user) REFERENCES user (id_user);
+
+ALTER TABLE order_detail
+  ADD CONSTRAINT FK_order_detail_product
+  FOREIGN KEY (id_product) REFERENCES product (id_product);
+
+ALTER TABLE order_detail
+  ADD CONSTRAINT FK_order_detail_client_order
+  FOREIGN KEY (id_client_order) REFERENCES client_order (id_client_order);
+
+ALTER TABLE cart
+  ADD CONSTRAINT FK_cart_user
+  FOREIGN KEY (id_cart) REFERENCES user (id_user);
+
+ALTER TABLE cart
+  ADD CONSTRAINT FK_cart_product
+  FOREIGN KEY (id_product) REFERENCES product (id_product);
+
+ALTER TABLE cart
+  ADD CONSTRAINT FK_cart_order_detail
+  FOREIGN KEY (id_order_detail) REFERENCES order_detail (id_order_detail);
+
+ALTER TABLE rating
+  ADD CONSTRAINT FK_rating_product
+  FOREIGN KEY (id_product) REFERENCES product (id_product);
+
+ALTER TABLE rating
+  ADD CONSTRAINT FK_rating_user
+  FOREIGN KEY (id_user) REFERENCES user (id_user);
+
+ALTER TABLE user_rol
+  ADD CONSTRAINT FK_user_rol_user
+  FOREIGN KEY (id_user) REFERENCES user (id_user);
+
+ALTER TABLE user_rol
+  ADD CONSTRAINT FK_user_rol_rol
+  FOREIGN KEY (id_rol) REFERENCES rol (id_rol);
