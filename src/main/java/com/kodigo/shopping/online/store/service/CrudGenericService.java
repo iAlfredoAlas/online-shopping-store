@@ -1,12 +1,15 @@
 package com.kodigo.shopping.online.store.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface CrudGenericService <T, ID> {
 
-    public List<T> getAll();
+    public Page<T> getAll(Pageable pageable);
 
-    public List<T> findCustom(Boolean flat);
+    public Page<T> findCustom(Pageable pageable, Boolean flat);
 
     public T findById(Long id);
 

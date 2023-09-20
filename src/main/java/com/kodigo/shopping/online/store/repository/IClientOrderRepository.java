@@ -1,11 +1,11 @@
 package com.kodigo.shopping.online.store.repository;
 
 import com.kodigo.shopping.online.store.models.ClientOrder;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IClientOrderRepository extends IGenericRepository<ClientOrder, Long>{
 
-    List<ClientOrder> findByIsClientOrderActive(Boolean isClientOrderActive);
+    Page<ClientOrder> findByIsClientOrderActive(Pageable pageable, Boolean isClientOrderActive);
 
 }
