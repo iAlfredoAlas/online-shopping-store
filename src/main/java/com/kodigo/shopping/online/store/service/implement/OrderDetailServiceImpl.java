@@ -6,9 +6,9 @@ import com.kodigo.shopping.online.store.service.IOrderDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -18,15 +18,15 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     private IOrderDetailRepository orderDetailRepository;
 
     @Override
-    public List<OrderDetail> getAll() {
+    public Page<OrderDetail> getAll(Pageable pageable) {
         log.info("Show all data");
-        return orderDetailRepository.findAll();
+        return orderDetailRepository.findAll(pageable);
     }
 
     @Override
-    public List<OrderDetail> findCustom(Boolean flat) {
+    public Page<OrderDetail> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return orderDetailRepository.findByIsOrderDetailActive(flat);
+        return orderDetailRepository.findByIsOrderDetailActive(pageable, flat);
     }
 
     @Override

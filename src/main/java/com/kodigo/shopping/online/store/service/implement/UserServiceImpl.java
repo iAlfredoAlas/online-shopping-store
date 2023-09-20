@@ -6,10 +6,10 @@ import com.kodigo.shopping.online.store.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -22,15 +22,15 @@ public class UserServiceImpl implements IUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> getAll() {
+    public Page<User> getAll(Pageable pageable) {
         log.info("Show all data");
-        return userRespository.findAll();
+        return userRespository.findAll(pageable);
     }
 
     @Override
-    public List<User> findCustom(Boolean flat) {
+    public Page<User> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return userRespository.findByIsUserActive(flat);
+        return userRespository.findByIsUserActive(pageable, flat);
     }
 
     @Override

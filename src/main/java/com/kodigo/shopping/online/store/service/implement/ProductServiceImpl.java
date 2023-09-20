@@ -6,6 +6,8 @@ import com.kodigo.shopping.online.store.service.IProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +20,15 @@ public class ProductServiceImpl implements IProductService {
     private IProductRepository productRepository;
 
     @Override
-    public List<Product> getAll() {
+    public Page<Product> getAll(Pageable pageable) {
         log.info("Show all data");
-        return productRepository.findAll();
+        return productRepository.findAll(pageable);
     }
 
     @Override
-    public List<Product> findCustom(Boolean flat) {
+    public Page<Product> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return productRepository.findByIsProductActive(flat);
+        return productRepository.findByIsProductActive(pageable, flat);
     }
 
     @Override

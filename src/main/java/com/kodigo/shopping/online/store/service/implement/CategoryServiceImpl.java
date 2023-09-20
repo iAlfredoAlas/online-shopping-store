@@ -6,9 +6,9 @@ import com.kodigo.shopping.online.store.service.ICategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,15 +19,15 @@ public class CategoryServiceImpl implements ICategoryService {
     private ICategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getAll() {
+    public Page<Category> getAll(Pageable pageable) {
         log.info("Show all data.");
-        return categoryRepository.findAll();
+        return categoryRepository.findAll(pageable);
     }
 
     @Override
-    public List<Category> findCustom(Boolean flat) {
+    public Page<Category> findCustom(Pageable pageable,Boolean flat) {
         log.info("Show actives");
-        return categoryRepository.findByIsCategoryActive(flat);
+        return categoryRepository.findByIsCategoryActive(pageable, flat);
     }
 
     @Override

@@ -6,9 +6,9 @@ import com.kodigo.shopping.online.store.service.ICartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,15 +19,15 @@ public class CartServiceImpl implements ICartService {
 
 
     @Override
-    public List<Cart> getAll() {
+    public Page<Cart> getAll(Pageable pageable) {
         log.info("Show all data.");
-        return cartRepository.findAll();
+        return cartRepository.findAll(pageable);
     }
 
     @Override
-    public List<Cart> findCustom(Boolean flat) {
+    public Page<Cart> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return cartRepository.findByIsCartActive(flat);
+        return cartRepository.findByIsCartActive(pageable, flat);
     }
 
     @Override

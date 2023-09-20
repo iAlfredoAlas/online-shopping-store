@@ -6,9 +6,9 @@ import com.kodigo.shopping.online.store.service.IRatingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,15 +19,15 @@ public class RatingServiceImpl implements IRatingService {
     private IRatingRepository ratingRepository;
 
     @Override
-    public List<Rating> getAll() {
+    public Page<Rating> getAll(Pageable pageable) {
         log.info("Show all data");
-        return ratingRepository.findAll();
+        return ratingRepository.findAll(pageable);
     }
 
     @Override
-    public List<Rating> findCustom(Boolean flat) {
+    public Page<Rating> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return ratingRepository.findByIsRatingActive(flat);
+        return ratingRepository.findByIsRatingActive(pageable, flat);
     }
 
     @Override

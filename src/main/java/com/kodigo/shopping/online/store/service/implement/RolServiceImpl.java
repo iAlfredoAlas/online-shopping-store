@@ -6,9 +6,9 @@ import com.kodigo.shopping.online.store.service.IRolService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,15 +19,15 @@ public class RolServiceImpl implements IRolService {
     private IRolRepository rolRepository;
 
     @Override
-    public List<Rol> getAll() {
+    public Page<Rol> getAll(Pageable pageable) {
         log.info("Show all data");
-        return rolRepository.findAll();
+        return rolRepository.findAll(pageable);
     }
 
     @Override
-    public List<Rol> findCustom(Boolean flat) {
+    public Page<Rol> findCustom(Pageable pageable, Boolean flat) {
         log.info("Show actives");
-        return rolRepository.findByIsRolActive(flat);
+        return rolRepository.findByIsRolActive(pageable, flat);
     }
 
     @Override
