@@ -21,7 +21,7 @@ public interface IGenericController<T, ID> {
     public ResponseEntity<?> update(@PathVariable ID id, @RequestBody T model);
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody T created);
+    public ResponseEntity<?> create(@RequestBody T model);
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable ID id);
