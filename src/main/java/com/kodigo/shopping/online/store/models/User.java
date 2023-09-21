@@ -60,4 +60,13 @@ public class User implements Serializable {
             @JoinColumn(name = "idRol", referencedColumnName = "id_rol") })
     private List<Rol> rolList = new ArrayList<>();
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
