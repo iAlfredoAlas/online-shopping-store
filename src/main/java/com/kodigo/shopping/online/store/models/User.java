@@ -1,5 +1,7 @@
 package com.kodigo.shopping.online.store.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,10 +41,10 @@ public class User implements Serializable {
     private String password;
 
     @Basic(optional = false)
-    @Column(name = "user_mail")
+    @Column(name = "user_email", unique = true)
     @Getter
     @Setter
-    private String userMail;
+    private String userEmail;
 
     @Basic(optional = false)
     @Column(name = "user_status")
@@ -58,4 +60,13 @@ public class User implements Serializable {
             @JoinColumn(name = "idRol", referencedColumnName = "id_rol") })
     private List<Rol> rolList = new ArrayList<>();
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -38,6 +38,10 @@ public class RatingDTO {
 
     @Getter
     @Setter
+    private Boolean isRatingActive;
+
+    @Getter
+    @Setter
     private UserDTO idUser;
 
     @Getter

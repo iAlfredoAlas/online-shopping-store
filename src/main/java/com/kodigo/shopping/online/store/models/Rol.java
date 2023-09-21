@@ -1,5 +1,6 @@
 package com.kodigo.shopping.online.store.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rol")
@@ -35,5 +38,11 @@ public class Rol implements Serializable {
     @Getter
     @Setter
     private Boolean isRolActive = Boolean.TRUE;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "rolList")
+    @Getter
+    @Setter
+    private List<User> usurList = new ArrayList<>();
 
 }

@@ -1,6 +1,10 @@
 package com.kodigo.shopping.online.store.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
@@ -10,6 +14,8 @@ import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 
     @Getter
@@ -31,13 +37,24 @@ public class UserDTO {
     @Email(message = "The field must be a valid email address")
     @Getter
     @Setter
-    private String userMail;
+    private String userEmail;
 
     @NotNull(message = "The status cannot be null")
     @Getter
     @Setter
     private Boolean isUserActive = Boolean.TRUE;
 
+    @Getter
+    @Setter
     private List<RolDTO> rolList = new ArrayList<>();
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
