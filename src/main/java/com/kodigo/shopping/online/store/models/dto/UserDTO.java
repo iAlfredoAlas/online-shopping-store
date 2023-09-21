@@ -31,13 +31,15 @@ public class UserDTO {
     @Email(message = "The field must be a valid email address")
     @Getter
     @Setter
-    private String userMail;
+    private String userEmail;
 
     @NotNull(message = "The status cannot be null")
     @Getter
     @Setter
     private Boolean isUserActive = Boolean.TRUE;
 
+    @Getter
+    @Setter
     private List<RolDTO> rolList = new ArrayList<>();
 
 }
