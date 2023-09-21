@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kodigo.shopping.online.store.models.Product;
 import com.kodigo.shopping.online.store.models.User;
 import com.kodigo.shopping.online.store.util.ETypeRating;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class RatingDTO {
 
     @Getter

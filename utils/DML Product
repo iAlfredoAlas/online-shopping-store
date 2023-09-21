@@ -1,0 +1,12 @@
+INSERT INTO sql9647809.product (id_category, product_name, product_description, stock, price, status_product, product_status)
+VALUES
+(1, 'Smartphone', 'High-end smartphone', 50, 799.99, 1, 1),
+(1, 'Tablet', '10-inch tablet', 30, 349.99, 1, 1),
+(2, 'T-Shirt', 'Cotton t-shirt', 100, 19.99, 1, 1),
+(2, 'Jeans', 'Slim-fit jeans', 75, 49.99, 1, 1),
+(3, 'Mystery Novel', 'Best-selling mystery novel', 20, 14.99, 1, 1),
+(3, 'Cookbook', 'Collection of delicious recipes', 15, 24.99, 1, 1),
+(4, 'Sofa', 'Comfortable living room sofa', 5, 599.99, 0, 0),
+(4, 'Coffee Table', 'Wooden coffee table', 10, 149.99, 0, 0),
+(5, 'Basketball', 'Official size basketball', 25, 29.99, 0, 0),
+(5, 'Camping Tent', '2-person camping tent', 40, 79.99, 0, 0);
