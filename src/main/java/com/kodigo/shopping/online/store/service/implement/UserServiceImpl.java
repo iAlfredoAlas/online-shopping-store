@@ -19,6 +19,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRespository userRespository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -42,6 +43,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User add(User model) {
         log.info("Save User");
+        model.setPassword(passwordEncoder.encode(model.getPassword()));
         return userRespository.save(model);
     }
 
@@ -53,7 +55,7 @@ public class UserServiceImpl implements IUserService {
         if (model.getPassword() != null && !model.getPassword().isBlank()) {
             objUser.setPassword(passwordEncoder.encode(model.getPassword()));
         }
-        objUser.setUserMail(model.getUserMail());
+        objUser.setUserEmail(model.getUserEmail());
         objUser.setIsUserActive(model.getIsUserActive());
         objUser.setRolList(model.getRolList());
         return userRespository.save(objUser);
