@@ -1,11 +1,14 @@
 package com.kodigo.shopping.online.store.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RolDTO {
 
@@ -23,5 +26,10 @@ public class RolDTO {
     @Getter
     @Setter
     private Boolean isRolActive = Boolean.TRUE;
+
+    @Getter
+    @Setter
+    @JsonIgnore
+    private List<UserDTO> userList = new ArrayList<>();
 
 }
