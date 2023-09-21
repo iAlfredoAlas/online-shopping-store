@@ -1,6 +1,7 @@
 package com.kodigo.shopping.online.store.service.implement;
 
 import com.kodigo.shopping.online.store.models.OrderDetail;
+import com.kodigo.shopping.online.store.models.Product;
 import com.kodigo.shopping.online.store.repository.IOrderDetailRepository;
 import com.kodigo.shopping.online.store.service.IOrderDetailService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,9 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 
     @Autowired
     private IOrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     @Override
     public Page<OrderDetail> getAll(Pageable pageable) {
@@ -38,7 +42,15 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     @Override
     public OrderDetail add(OrderDetail model) {
         log.info("Save OrderDetail");
-        return orderDetailRepository.save(model);
+        Product product = model.getIdProduct();
+        int quantity = model.getQuantity();
+        if (product != null && product.getStock() >= quantity) {
+            productService.updateStock(product.getIdProduct(), -quantity); // Restar la cantidad del stock
+            productService.update(product, product.getIdProduct()); // Actualizar el producto
+            return orderDetailRepository.save(model);
+        } else {
+            throw new IllegalArgumentException("No hay suficiente stock disponible para este producto.");
+        }
     }
 
     @Override
