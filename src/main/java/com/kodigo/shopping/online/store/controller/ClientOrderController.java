@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/client-controller")
+@RequestMapping("/client-order")
 public class ClientOrderController implements IGenericController<ClientOrderDTO, Long> {
 
     @Autowired
