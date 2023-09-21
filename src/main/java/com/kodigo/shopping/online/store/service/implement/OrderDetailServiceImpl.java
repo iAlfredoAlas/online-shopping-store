@@ -42,15 +42,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     @Override
     public OrderDetail add(OrderDetail model) {
         log.info("Save OrderDetail");
-        Product product = model.getIdProduct();
-        int quantity = model.getQuantity();
-        if (product != null && product.getStock() >= quantity) {
-            productService.updateStock(product.getIdProduct(), -quantity); // Restar la cantidad del stock
-            productService.update(product, product.getIdProduct()); // Actualizar el producto
-            return orderDetailRepository.save(model);
-        } else {
-            throw new IllegalArgumentException("No hay suficiente stock disponible para este producto.");
-        }
+        return orderDetailRepository.save(model);
     }
 
     @Override

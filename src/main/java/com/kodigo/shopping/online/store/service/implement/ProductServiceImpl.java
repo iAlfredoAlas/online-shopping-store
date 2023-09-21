@@ -62,16 +62,4 @@ public class ProductServiceImpl implements IProductService {
         productRepository.deleteById(id);
     }
 
-    public void updateStock(Long idProduct, int quantity) {
-        Product product = productRepository.findById(idProduct)
-                .orElseThrow(() -> new EmptyResultDataAccessException("Product not found", 404));
-
-        if (quantity >= 0) {
-            product.setStock(product.getStock() - quantity);
-            productRepository.save(product);
-        } else {
-            throw new IllegalArgumentException("La cantidad debe ser mayor o igual que cero.");
-        }
-    }
-
 }
