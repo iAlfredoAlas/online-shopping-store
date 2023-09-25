@@ -45,14 +45,14 @@ public class AuthController {
         try {
             log.info("Authenticating user...");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+                    authenticationRequest.getUserName(), authenticationRequest.getPassword()));
             log.info("Authentication completed !!!");
         } catch (AuthenticationException e) {
             log.error("User name or password incorrect...");
             return new ResponseEntity<>(new ResponseDTO("Incorrect username or password", "401", null, e.getMessage()),
                     HttpStatus.UNAUTHORIZED);
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUserName());
         log.info("Generating jwt response...");
         final String jwt = jwtUtil.generateToken(userDetails);
         log.info("Returning jwt");
