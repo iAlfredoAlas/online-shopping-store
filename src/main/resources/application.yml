@@ -11,12 +11,4 @@ server:
   servlet:
     context-path: /online-shopping-store
 
-auth:
-  server:
-    token:
-      lifetime: '1800000'
-    secret: 51c522109a71a0d958e17bb3b1658b65ed13d491801cab63181b376d8e4c847e
-
-
-
 
