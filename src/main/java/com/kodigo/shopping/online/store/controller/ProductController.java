@@ -4,6 +4,7 @@ import com.kodigo.shopping.online.store.models.Product;
 import com.kodigo.shopping.online.store.models.Rol;
 import com.kodigo.shopping.online.store.models.dto.ProductDTO;
 import com.kodigo.shopping.online.store.models.dto.RolDTO;
+import com.kodigo.shopping.online.store.repository.IProductRepository;
 import com.kodigo.shopping.online.store.service.IProductService;
 import com.kodigo.shopping.online.store.util.ResponseFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +14,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -24,6 +33,9 @@ public class ProductController implements IGenericController<ProductDTO, Long>{
 
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private IProductRepository productRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -82,4 +94,21 @@ public class ProductController implements IGenericController<ProductDTO, Long>{
         productService.deleteLog(id);
         return ResponseEntity.ok("Record deleted");
     }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<?> findAllPageable(@PageableDefault(size = 10) Pageable pageable,
+                                             @RequestParam(value = "productName", required = false, defaultValue = "") String productName) {
+        Page<Product> productPage = productRepository.findByNombreUsuario("%" + productName + "%", pageable);
+        List<ProductDTO> productsDTO = productPage.getContent().stream()
+                .map(usuario -> mapper.map(usuario, ProductDTO.class)).collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Products", productsDTO);
+        response.put("currentPage", productPage.getNumber());
+        response.put("totalItems", productPage.getTotalElements());
+        response.put("totalPages", productPage.getTotalPages());
+
+        return ResponseEntity.ok(response);
+    }
+
 }
