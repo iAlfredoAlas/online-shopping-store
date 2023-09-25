@@ -5,6 +5,7 @@ import com.kodigo.shopping.online.store.security.filter.JwtRequestFilter;
 import com.kodigo.shopping.online.store.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,12 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 @EnableWebSecurity
 @PropertySource("classpath:application.yml")
@@ -47,12 +44,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
 		}).and();
 
-		http.authorizeRequests().antMatchers("/actuator/**").permitAll().antMatchers("/auth/authenticate").permitAll()
-				.antMatchers("/user").hasAuthority("ROLE_Admin").antMatchers("/**")
-				.hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString()).antMatchers("/**")
-				.hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString()).antMatchers("/**").permitAll()
-				.antMatchers("/**").permitAll().antMatchers("/**").hasAnyRole(Roles.Admin.toString()).anyRequest()
-				.authenticated();
+		http.authorizeRequests().antMatchers("/actuator/**").permitAll()
+				.antMatchers("/auth/authenticate").permitAll()
+				.antMatchers("/user").hasAuthority("ROLE_Admin")
+				.antMatchers("/category", "/product").hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString())
+				.antMatchers(HttpMethod.DELETE, "/product/{id}").hasAuthority("ROLE_Admin") // Limitar el DELETE específico
+				.antMatchers("/**").permitAll()
+				.anyRequest().authenticated();
 		http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
