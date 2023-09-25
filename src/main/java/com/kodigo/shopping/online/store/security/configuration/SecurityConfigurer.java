@@ -24,61 +24,60 @@ import java.util.Arrays;
 @PropertySource("classpath:application.yml")
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    String allowedOrigins;
+	String allowedOrigins;
 
-    private final CustomUserDetailsService customUserDetailsService;
-    private final JwtRequestFilter requestFilter;
+	private final CustomUserDetailsService customUserDetailsService;
+	private final JwtRequestFilter requestFilter;
 
-    public SecurityConfigurer(CustomUserDetailsService customUserDetailsService, JwtRequestFilter requestFilter) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.requestFilter = requestFilter;
-    }
+	public SecurityConfigurer(CustomUserDetailsService customUserDetailsService, JwtRequestFilter requestFilter) {
+		this.customUserDetailsService = customUserDetailsService;
+		this.requestFilter = requestFilter;
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http = http.cors().and().csrf().disable();
-        http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
-        http = http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-        }).and();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http = http.cors().and().csrf().disable();
+		http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+		http = http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+		}).and();
 
-        http.authorizeRequests().antMatchers("/actuator/**").permitAll().antMatchers("/**")
-                .hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString())
-                .antMatchers("/**")
-                .hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString())
-                .antMatchers("/**").permitAll().antMatchers("/**").permitAll()
-                .antMatchers("/**").hasAnyRole(Roles.Admin.toString()).anyRequest()
-                .authenticated();
-        http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+		http.authorizeRequests().antMatchers("/actuator/**").permitAll().antMatchers("/auth/authenticate").permitAll()
+				.antMatchers("/user").hasAuthority("ROLE_Admin").antMatchers("/**")
+				.hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString()).antMatchers("/**")
+				.hasAnyRole(Roles.Guest.toString(), Roles.Admin.toString()).antMatchers("/**").permitAll()
+				.antMatchers("/**").permitAll().antMatchers("/**").hasAnyRole(Roles.Admin.toString()).anyRequest()
+				.authenticated();
+		http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public CorsFilter corsFilter() {
-        String[] origins = allowedOrigins.split(",");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList(origins));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        String[] origins = allowedOrigins.split(",");
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.setAllowedOrigins(Arrays.asList(origins));
+//        config.setAllowedHeaders(Arrays.asList("*"));
+//        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+//        source.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(source);
+//    }
 
 }
