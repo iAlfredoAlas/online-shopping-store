@@ -16,7 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @SQLDelete(sql = "UPDATE user SET user_status = false WHERE id_user=?")
-@AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
 
@@ -68,5 +67,14 @@ public class User implements Serializable {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User(Long idUser, String userName, String password, String userEmail, Boolean isUserActive, List<Rol> rolList) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.password = password;
+        this.userEmail = userEmail;
+        this.isUserActive = isUserActive;
+        this.rolList = rolList;
     }
 }
