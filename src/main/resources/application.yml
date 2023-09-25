@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: sql9647809
+    url: jdbc:mysql://sql9.freesqldatabase.com:3306/sql9647809
+    password: mPziKIXlZS
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  servlet:
+    context-path: /online-shopping-store
+
+
