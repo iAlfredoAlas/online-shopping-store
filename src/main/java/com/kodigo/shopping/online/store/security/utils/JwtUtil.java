@@ -21,13 +21,9 @@ public class JwtUtil {
 
     @Autowired
     UserRepository userRepository;
-
-    @Value("${auth.server.token.secret}")
-    private String secretKey;
-
-    @Value("${auth.server.token.lifetime}")
-    private Long lifetime;
-
+    
+    @Autowired
+    private JwtProperties jwtProperties;
 
     private UUIDUtil uuidUtil;
 
@@ -47,7 +43,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -73,8 +69,8 @@ public class JwtUtil {
     private String createToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getLifetime()))
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret()).compact();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
